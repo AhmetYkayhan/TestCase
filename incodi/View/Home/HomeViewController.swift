@@ -12,17 +12,19 @@ final class HomeViewController: UIViewController, AlertPresenting, EmptyStatePre
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
-    private var viewModel: HomeViewModelProtocol!
+    private var _viewModel: HomeViewModelProtocol?
     private let rateLimitBanner = RateLimitBannerViewController()
 
-    
-    func configure(viewModel: HomeViewModelProtocol) {
-        self.viewModel = viewModel
+    var viewModel: HomeViewModelProtocol {
+        guard let vm = _viewModel else { fatalError("configure(viewModel:) çağrılmadı") }
+        return vm
     }
-    
+    func configure(viewModel: HomeViewModelProtocol) {
+        self._viewModel = viewModel
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "GitHub Arama"
+        title = "GitHub İsim Arama"
         searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
@@ -36,7 +38,7 @@ final class HomeViewController: UIViewController, AlertPresenting, EmptyStatePre
     }
     
     private func bindVM() {
-        viewModel.onUpdate = { [weak self] in
+        _viewModel?.onUpdate = { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()
             if self.viewModel.users.isEmpty {
@@ -45,10 +47,10 @@ final class HomeViewController: UIViewController, AlertPresenting, EmptyStatePre
                 self.hideEmptyState(from: self.view)
             }
         }
-        viewModel.onError = { [weak self] msg in
+        _viewModel?.onError = { [weak self] msg in
             self?.presentError(msg)
         }
-        viewModel.onRateLimit = { [weak self] until in
+        _viewModel?.onRateLimit = { [weak self] until in
             guard let self = self else { return }
             self.rateLimitBanner.show(in: self, until: until)  
         }

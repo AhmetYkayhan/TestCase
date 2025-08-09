@@ -10,21 +10,26 @@ import UIKit
 final class FavoritesViewController: UIViewController, EmptyStatePresentable {
     @IBOutlet weak var tableView: UITableView!
     
-    private var viewModel: FavoritesViewModelProtocol!
+    private var _viewModel: FavoritesViewModelProtocol?
+    var viewModel: FavoritesViewModelProtocol {
+        guard let vm = _viewModel else { fatalError("configure(viewModel:) çağrılmadı") }
+        return vm
+    }
     
-    func configure(viewModel: FavoritesViewModelProtocol = FavoritesViewModel()) { self.viewModel = viewModel
+    func configure(viewModel: FavoritesViewModelProtocol) {
+        self._viewModel = viewModel
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Favoriler"
+        title = "Favorilerim"
         
         tableView.dataSource = self
         tableView.delegate = self
         
         tableView.register(UINib(nibName: "UserCell", bundle: nil), forCellReuseIdentifier: "UserCell")
         
-        viewModel.onUpdate = {
+        _viewModel?.onUpdate = {
             [weak self] in self?.tableView.reloadData()
         }
         

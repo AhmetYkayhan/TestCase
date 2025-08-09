@@ -6,7 +6,7 @@
 //
 
 import Foundation
-protocol FavoritesViewModelProtocol {
+protocol FavoritesViewModelProtocol: AnyObject {
     var favoriteUsers: [GitHubUser] { get }
     var onUpdate: (() -> Void)? { get set }
     
@@ -17,12 +17,12 @@ protocol FavoritesViewModelProtocol {
 
 final class FavoritesViewModel: FavoritesViewModelProtocol {
     
-    private let favorites: FavoritesManaging
+    private let favorites: FavoritesManageProtocol
     private(set) var favoriteUsers: [GitHubUser] = []
     
     var onUpdate: (() -> Void)?
 
-    init(favoritesManager: FavoritesManaging = FavoritesManager.shared) {
+    init(favoritesManager: FavoritesManageProtocol = FavoritesManager.shared) {
         self.favorites = favoritesManager
         NotificationCenter.default.addObserver(self, selector: #selector(favsChanged), name: .favoritesChanged, object: nil)
         refresh()

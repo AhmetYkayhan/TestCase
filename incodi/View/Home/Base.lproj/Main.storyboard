@@ -23,9 +23,16 @@
                             </tableView>
                             <searchBar contentMode="redraw" placeholder="Github ismi giriniz" translatesAutoresizingMaskIntoConstraints="NO" id="8jq-bk-Oxe">
                                 <rect key="frame" x="10" y="128" width="373" height="56"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="barTintColor" systemColor="tableCellGroupedBackgroundColor"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="VQy-ed-W3U"/>
                                 </connections>
@@ -53,9 +60,4 @@
             <point key="canvasLocation" x="90.839694656488547" y="-34.507042253521128"/>
         </scene>
     </scenes>
-    <resources>
-        <systemColor name="tableCellGroupedBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>

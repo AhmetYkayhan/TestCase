@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol HomeViewModelProtocol {
+protocol HomeViewModelProtocol: AnyObject {
     var users: [GitHubUser] { get }
     var onUpdate: (() -> Void)? { get set }
     var onError: ((String) -> Void)? { get set }
@@ -20,7 +20,7 @@ protocol HomeViewModelProtocol {
 
 final class HomeViewModel: HomeViewModelProtocol {
     private let service: GitHubApiServiceProtocol
-    private let favorites: FavoritesManaging
+    private let favorites: FavoritesManageProtocol
     
     private(set) var users: [GitHubUser] = []
     
@@ -30,7 +30,7 @@ final class HomeViewModel: HomeViewModelProtocol {
     var onRateLimit: ((Date) -> Void)?
 
     init(service: GitHubApiServiceProtocol = GitHubApiService(),
-         favoritesManager: FavoritesManaging = FavoritesManager.shared) {
+         favoritesManager: FavoritesManageProtocol = FavoritesManager.shared) {
         self.service = service
         self.favorites = favoritesManager
         NotificationCenter.default.addObserver(self, selector: #selector(favsChanged), name: .favoritesChanged, object: nil)

@@ -8,7 +8,7 @@
 import Foundation
 
 
-protocol FavoritesManaging {
+protocol FavoritesManageProtocol {
     func getFavorites() -> [GitHubUser]
     func add(user: GitHubUser)
     func remove(user: GitHubUser)
@@ -16,8 +16,10 @@ protocol FavoritesManaging {
     func isFavorite(user: GitHubUser) -> Bool
 }
 
-final class FavoritesManager: FavoritesManaging {
-    static let shared: FavoritesManaging = FavoritesManager()
+final class FavoritesManager: FavoritesManageProtocol {
+    static let shared: FavoritesManageProtocol = FavoritesManager()
+    private init() {}
+    
     private let key = "favorite_users"
 
     func getFavorites() -> [GitHubUser] {

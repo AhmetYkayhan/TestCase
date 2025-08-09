@@ -7,34 +7,37 @@
 
 import UIKit
 
-class DetailsViewController: UIViewController {
+final class DetailsViewController: UIViewController {
 
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var openProfileButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
     
-    private var viewModel: DetailViewModelProtocol!
+    private var _viewModel: DetailViewModelProtocol?
+    var viewModel: DetailViewModelProtocol {
+        guard let vm = _viewModel else { fatalError("configure(viewModel:) çağrılmadı") }
+        return vm
+    }
     
-    func configure(viewModel: DetailViewModelProtocol) {
-        self.viewModel = viewModel
+     func configure(viewModel: DetailViewModelProtocol) {
+        self._viewModel = viewModel
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Kullanıcı Detayı"
+        title = "Kişi Detayı"
         
-        avatarImageView.kf.setImage(with: URL(string: viewModel.user.avatar_url))
+        avatarImageView.kf.setImage(with: URL(string: viewModel.user.avatar_url ?? "dash.png"))
         usernameLabel.text = viewModel.user.login
         updateFavoriteButton()
         
-        viewModel.onFavoriteStatusChanged = { [weak self] in
+        _viewModel?.onFavoriteStatusChanged = { [weak self] in
             DispatchQueue.main.async {
                 self?.updateFavoriteButton()
             }
         }
         avatarImageView.layer.cornerRadius = 50
-        
         favoriteButton.addTarget(self, action: #selector(favoriteTapped), for: .touchUpInside)
     }
     
@@ -53,6 +56,6 @@ class DetailsViewController: UIViewController {
     }
     
     @IBAction func openProfileButtonTapped(_ sender: UIButton) {
-        if let url = URL(string: viewModel.user.html_url) { UIApplication.shared.open(url) }
+        if let url = URL(string: viewModel.user.html_url ?? "github.com") { UIApplication.shared.open(url) }
     }
 }

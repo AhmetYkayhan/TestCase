@@ -24,7 +24,7 @@ final class UserCell: UITableViewCell {
     
     func configure(with user: GitHubUser, isFavorite: Bool) {
         nameLabel.text = user.login
-        avatarImageView.kf.setImage(with: URL(string: user.avatar_url))
+        avatarImageView.kf.setImage(with: URL(string: user.avatar_url ?? "dash"))
         let name = isFavorite ? "heart.fill" : "heart"
         favoriteButton.setImage(UIImage(systemName: name), for: .normal)
     }
