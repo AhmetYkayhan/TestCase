@@ -9,8 +9,8 @@ import UIKit
 
 final class HomeViewController: UIViewController, AlertPresenting, EmptyStatePresentable {
 
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var tableView: UITableView!
     
     private var _viewModel: HomeViewModelProtocol?
     private let rateLimitBanner = RateLimitBannerViewController()

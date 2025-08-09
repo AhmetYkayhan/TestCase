@@ -9,10 +9,10 @@ import UIKit
 
 final class DetailsViewController: UIViewController {
 
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var openProfileButton: UIButton!
-    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet private weak var avatarImageView: UIImageView!
+    @IBOutlet private weak var usernameLabel: UILabel!
+    @IBOutlet private weak var openProfileButton: UIButton!
+    @IBOutlet private weak var favoriteButton: UIButton!
     
     private var _viewModel: DetailViewModelProtocol?
     var viewModel: DetailViewModelProtocol {
@@ -28,7 +28,7 @@ final class DetailsViewController: UIViewController {
         super.viewDidLoad()
         title = "Kişi Detayı"
         
-        avatarImageView.kf.setImage(with: URL(string: viewModel.user.avatar_url ?? "dash.png"))
+        avatarImageView.kf.setImage(with: URL(string: viewModel.user.avatarURL ?? "dash.png"))
         usernameLabel.text = viewModel.user.login
         updateFavoriteButton()
         
@@ -56,6 +56,6 @@ final class DetailsViewController: UIViewController {
     }
     
     @IBAction func openProfileButtonTapped(_ sender: UIButton) {
-        if let url = URL(string: viewModel.user.html_url ?? "github.com") { UIApplication.shared.open(url) }
+        if let url = URL(string: viewModel.user.htmlURL ?? "github.com") { UIApplication.shared.open(url) }
     }
 }

@@ -9,9 +9,9 @@ import UIKit
 import Kingfisher
 
 final class UserCell: UITableViewCell {
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet private weak var avatarImageView: UIImageView!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var favoriteButton: UIButton!
     
     var onFavoriteTapped: (() -> Void)?
     
@@ -24,7 +24,7 @@ final class UserCell: UITableViewCell {
     
     func configure(with user: GitHubUser, isFavorite: Bool) {
         nameLabel.text = user.login
-        avatarImageView.kf.setImage(with: URL(string: user.avatar_url ?? "dash"))
+        avatarImageView.kf.setImage(with: URL(string: user.avatarURL ?? "dash"))
         let name = isFavorite ? "heart.fill" : "heart"
         favoriteButton.setImage(UIImage(systemName: name), for: .normal)
     }

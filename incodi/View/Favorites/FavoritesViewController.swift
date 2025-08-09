@@ -8,7 +8,7 @@
 import UIKit
 
 final class FavoritesViewController: UIViewController, EmptyStatePresentable {
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     private var _viewModel: FavoritesViewModelProtocol?
     var viewModel: FavoritesViewModelProtocol {
